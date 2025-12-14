@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Marca Blanca</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="assets/img/marca_blanca.jpeg" />
+    <style>
+        /* =========================
+   VARIABLES & RESET
+   ========================= */
+
+        :root {
+            --black: #000;
+            --white: #fff;
+            --line: #e5e5e5;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            overflow-x: hidden;
+        }
+
+        /* =========================
+   NAVBAR
+   ========================= */
+
+        .navbar {
+            border-bottom: 1px solid var(--line);
+            background: var(--white);
+        }
+
+        .navbar-brand {
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 0;
+            height: 1px;
+            background: var(--black);
+            transition: .4s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* =========================
+   HERO
+   ========================= */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .hero-title {
+            font-size: 8.5rem;
+            font-weight: 900;
+            line-height: .9;
+            animation: revealLeft 1.2s ease forwards;
+        }
+
+        /* =========================================================
+   HERO SUBTITLE FIX (LIGHT + DARK)
+   ========================================================= */
+
+        .hero-sub {
+            color: var(--black);
+            opacity: .85;
+        }
+
+        /* DARK MODE */
+        [data-theme="dark"] .hero-sub {
+            color: #ffffff;
+            opacity: .85;
+        }
+
+
+        /* =========================
+   HERO CARD
+   ========================= */
+
+        .card-wrapper {
+            perspective: 1200px;
+        }
+
+        .card-flip {
+            width: 380px;
+            height: 560px;
+        }
+
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        .card-wrapper:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 80%;
+            backface-visibility: hidden;
+            border: 1px solid var(--line);
+            padding: 30px;
+            background: var(--white);
+        }
+
+        .card-front img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: .8s ease;
+        }
+
+        .card-wrapper:hover img {
+            filter: grayscale(0%);
+        }
+
+        .card-front h1 {
+            font-size: 40px;
+            font-weight: 900;
+            margin-top: 25px;
+            line-height: 1;
+        }
+
+        .card-front p {
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            background: var(--black);
+            color: var(--white);
+        }
+
+
+        /* =========================
+   VERTICAL LABEL
+   ========================= */
+
+        .vertical-label {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            letter-spacing: 4px;
+            font-size: 11px;
+        }
+
+        /* =========================
+   SECTIONS
+   ========================= */
+
+        .section {
+            padding: 140px 0;
+            border-bottom: 1px solid var(--line);
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 60px;
+            font-weight: 800;
+            margin-bottom: 40px;
+        }
+
+        .section-text {
+            max-width: 600px;
+            line-height: 1.9;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .section-text::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1px;
+            height: 100%;
+            background: var(--black);
+        }
+
+        /* =========================
+   VISION / MISION IMAGE
+   ========================= */
+
+        .vision-box {
+            position: relative;
+            width: 100%;
+            height: 420px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+        }
+
+        .vision-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: .8s ease;
+        }
+
+        .vision-box:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        .vision-caption {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(0, 0, 0, .65);
+            color: white;
+            padding: 20px 25px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: .6s ease;
+        }
+
+        .vision-box:hover .vision-caption {
+            opacity: 1;
+            transform: none;
+        }
+
+        .vision-caption span {
+            font-size: 11px;
+            letter-spacing: 4px;
+        }
+
+        .vision-caption strong {
+            font-size: 32px;
+            font-weight: 900;
+        }
+
+        /* =========================
+   ANIMACIÓN TEXTO VISIÓN / MISIÓN
+   ========================= */
+
+        /* BASE */
+        .vision-text {
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            /* Inicia desde abajo */
+            transition: transform .6s cubic-bezier(.4, 0, .2, 1), opacity .6s ease-in-out;
+        }
+
+        /* LÍNEA EDITORIAL (se dibuja al hacer hover o al entrar) */
+        .vision-text::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1px;
+            height: 0;
+            background: var(--black);
+            transition: height .8s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        /* ANIMACIÓN AL ENTRAR EN VISTA */
+        .section .vision-text.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        .section:hover .vision-text::before {
+            height: 100%;
+        }
+
+        .section:hover .vision-text {
+            transform: translateX(6px);
+            /* Aparece suavemente desde la izquierda */
+        }
+
+        /* ANIMACIÓN AL HACER SCROLL Y ENTRAR EN VISTA (solo CSS sin JS) */
+        .section .vision-text {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        /* =========================
+ PROPUESTA DE VALOR
+========================= */
+        .editorial-visual {
+            position: relative;
+            height: 420px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+        }
+
+        .editorial-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: 1s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        .editorial-overlay {
+            position: absolute;
+            inset: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            background: linear-gradient(to top, rgba(0, 0, 0, .7), transparent);
+            color: #fff;
+            opacity: 0;
+            transition: .8s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        .editorial-visual:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        .editorial-visual:hover .editorial-overlay {
+            opacity: 1;
+        }
+
+        /* =========================
+ MAPA
+========================= */
+        .map-box {
+            width: 100%;
+            height: 420px;
+            border: 1px solid var(--line);
+            overflow: hidden;
+        }
+
+        .map-box iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* =========================
+ REDES SOCIALES
+========================= */
+        .social-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .social-card {
+            width: 220px;
+            height: 120px;
+            border: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-decoration: none;
+            color: var(--black);
+            position: relative;
+            overflow: hidden;
+            transition: .6s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        .social-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--black);
+            transform: translateY(100%);
+            transition: .6s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        .social-card span {
+            position: relative;
+            z-index: 2;
+        }
+
+        .social-card:hover {
+            color: white;
+        }
+
+        .social-card:hover::after {
+            transform: none;
+        }
+
+        /* =========================
+   FLOATING SOCIAL BUTTONS
+========================= */
+
+        /* =========================
+   FLOATING SOCIAL BUTTONS
+========================= */
+
+        .floating-socials {
+            position: fixed;
+            right: 24px;
+            bottom: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            z-index: 999;
+        }
+
+        /* BOTÓN BASE */
+        .float-btn {
+            position: relative;
+            width: 52px;
+            height: 52px;
+            border: 1px solid var(--line);
+            background: var(--white);
+            color: var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            overflow: hidden;
+            transition:
+                transform .5s cubic-bezier(.4, 0, .2, 1),
+                box-shadow .5s cubic-bezier(.4, 0, .2, 1),
+                width .5s cubic-bezier(.4, 0, .2, 1),
+                background .4s ease,
+                color .4s ease;
+        }
+
+        /* ICONO */
+        .float-btn i {
+            font-size: 22px;
+            z-index: 2;
+            transition: transform .5s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        /* TEXTO OCULTO */
+        .float-btn span {
+            position: absolute;
+            left: 56px;
+            white-space: nowrap;
+            font-size: 11px;
+            letter-spacing: 3px;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition:
+                opacity .4s ease,
+                transform .4s ease;
+        }
+
+        /* HOVER DESKTOP */
+        .float-btn:hover {
+            width: 170px;
+            background: var(--black);
+            color: var(--white);
+            transform: translateX(-6px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, .18);
+        }
+
+        .float-btn:hover i {
+            transform: scale(1.15);
+        }
+
+        .float-btn:hover span {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* =========================
+   TABLET
+========================= */
+        @media (max-width: 992px) {
+
+            .floating-socials {
+                right: 20px;
+                bottom: 26px;
+            }
+
+            .float-btn {
+                width: 48px;
+                height: 48px;
+            }
+
+            .float-btn i {
+                font-size: 20px;
+            }
+
+            /* SIN EXPANSIÓN */
+            .float-btn:hover {
+                width: 48px;
+                transform: none;
+                box-shadow: none;
+                background: var(--black);
+                color: var(--white);
+            }
+
+            .float-btn span {
+                display: none;
+            }
+        }
+
+        /* =========================
+   MOBILE
+========================= */
+        @media (max-width: 576px) {
+
+            .floating-socials {
+                right: 16px;
+                bottom: 22px;
+                gap: 12px;
+            }
+
+            .float-btn {
+                width: 46px;
+                height: 46px;
+                border-radius: 50%;
+            }
+
+            .float-btn i {
+                font-size: 19px;
+            }
+        }
+
+
+        /* =========================
+   MOBILE
+========================= */
+        @media (max-width: 576px) {
+
+            .floating-socials {
+                right: 16px;
+                bottom: 22px;
+                gap: 12px;
+            }
+
+            .float-btn {
+                width: 46px;
+                height: 46px;
+                border-radius: 50%;
+            }
+
+            .float-btn i {
+                font-size: 19px;
+            }
+        }
+
+
+        /* =========================
+ MOBILE – SIN TEXTO
+========================= */
+        @media(max-width:576px) {
+            .float-btn {
+                width: 50px;
+                height: 50px;
+            }
+
+            .float-btn:hover {
+                width: 50px;
+                border-radius: 50%;
+                transform: none;
+            }
+
+            .float-btn span {
+                display: none;
+            }
+        }
+
+
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .project-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: .8s ease;
+        }
+
+        .project-card:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        .project-info {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 25px;
+            background: linear-gradient(to top, rgba(0, 0, 0, .7), transparent);
+            color: white;
+            opacity: 0;
+            transition: .6s ease;
+        }
+
+        .project-card:hover .project-info {
+            opacity: 1;
+        }
+
+        /* =========================
+   FOOTER
+   ========================= */
+
+        footer {
+            padding: 80px 0;
+            font-size: 14px;
+        }
+
+        .social a {
+            margin-right: 20px;
+            color: var(--black);
+            text-decoration: none;
+        }
+
+        /* =========================
+   RESPONSIVE GLOBAL
+   NO MODIFICA HERO
+   ========================= */
+
+        /* ---------- TABLET ---------- */
+        @media (max-width: 992px) {
+
+            /* NAV */
+            .navbar .container-fluid {
+                padding-left: 20px !important;
+                padding-right: 20px !important;
+            }
+
+            .navbar-nav {
+                gap: 25px !important;
+            }
+
+            /* HERO – SOLO ESCALA */
+            .hero-title {
+                font-size: 4.8rem;
+            }
+
+            /* CENTRAR TARJETA */
+            .hero .col-lg-6:last-child {
+                justify-content: center !important;
+                margin-top: 60px;
+            }
+
+            .card-wrapper {
+                transform: scale(.95);
+                transform-origin: center;
+            }
+
+            /* SECTIONS */
+            .section {
+                padding: 100px 0;
+            }
+
+            .section-title {
+                font-size: 44px;
+            }
+
+            .section-text {
+                max-width: 100%;
+            }
+
+            /* VISION / MISION */
+            .vision-box {
+                height: 340px;
+                margin-top: 40px;
+            }
+
+            /* PROJECTS */
+            .project-card img {
+                height: 260px;
+            }
+
+            /* FOOTER */
+            footer {
+                padding: 60px 0;
+            }
+        }
+
+        /* ---------- MOBILE ---------- */
+        @media (max-width: 576px) {
+
+            /* NAV */
+            .navbar-brand {
+                font-size: 14px;
+                letter-spacing: 1px;
+            }
+
+            .nav-link {
+                padding: 12px 0;
+            }
+
+            /* HERO – MISMA ESTÉTICA */
+            .hero-title {
+                font-size: 3.4rem;
+                line-height: 1;
+            }
+
+            .hero-sub {
+                font-size: 11px;
+                letter-spacing: 2px;
+            }
+
+            .card-wrapper {
+                transform: scale(.9);
+            }
+
+            /* SECTIONS */
+            .section {
+                padding: 80px 0;
+            }
+
+            .section-title {
+                font-size: 34px;
+                margin-bottom: 25px;
+            }
+
+            .section-text {
+                font-size: 15px;
+                line-height: 1.8;
+            }
+
+            /* VISION / MISION */
+            .vision-box {
+                height: 260px;
+            }
+
+            .vision-caption strong {
+                font-size: 22px;
+            }
+
+            /* PROJECTS */
+            .project-card img {
+                height: 240px;
+            }
+
+            .project-info h5 {
+                font-size: 16px;
+            }
+
+            .project-info span {
+                font-size: 10px;
+            }
+
+            /* FOOTER */
+            footer {
+                padding: 50px 20px;
+                text-align: center;
+            }
+
+            .social a {
+                display: inline-block;
+                margin: 8px;
+            }
+        }
+
+        /* =========================
+   SWITCH EDITORIAL
+========================= */
+
+        .switch {
+            position: relative;
+            width: 48px;
+            height: 24px;
+            cursor: pointer;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            inset: 0;
+            background: #e0e0e0;
+            border-radius: 20px;
+            transition: .4s ease;
+        }
+
+        .slider::before {
+            content: '';
+            position: absolute;
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            top: 3px;
+            background: #fff;
+            border-radius: 50%;
+            transition: .4s ease;
+        }
+
+        /* ACTIVO */
+        .switch input:checked+.slider {
+            background: #000;
+        }
+
+        .switch input:checked+.slider::before {
+            transform: translateX(24px);
+            background: #fff;
+        }
+
+        /* LABEL */
+        .switch-label {
+            font-size: 11px;
+            letter-spacing: 2px;
+            margin-left: 10px;
+            user-select: none;
+        }
+
+        /* ICONOS EN SWITCH */
+        .switch-icon {
+            font-size: 13px;
+            margin-left: 8px;
+            opacity: .6;
+            transition: .3s ease;
+        }
+
+        .switch input:checked~.switch-icon {
+            opacity: 1;
+        }
+
+        /* =========================================================
+   DARK MODE SYSTEM (EDITORIAL — SEGURO)
+   ========================================================= */
+
+        [data-theme="dark"] {
+            --bg: #000000;
+            --text: #ffffff;
+            --line: #2b2b2b;
+        }
+
+        /* =========================================================
+   BASE
+   ========================================================= */
+
+        [data-theme="dark"] body {
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        [data-theme="dark"] * {
+            color: inherit;
+        }
+
+        /* =========================================================
+   NAVBAR (SIN HOVER DE COLOR)
+   ========================================================= */
+
+        [data-theme="dark"] .navbar {
+            background: #000000;
+            border-bottom: 1px solid var(--line);
+        }
+
+        [data-theme="dark"] .navbar-brand {
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] .nav-link,
+        [data-theme="dark"] .nav-link:hover,
+        [data-theme="dark"] .nav-link:focus {
+            color: #ffffff !important;
+            background: transparent !important;
+        }
+
+        /* línea animada */
+        [data-theme="dark"] .nav-link::after {
+            background: #ffffff;
+        }
+
+        /* =========================================================
+   HERO
+   ========================================================= */
+
+        [data-theme="dark"] .hero {
+            background: #000000;
+            border-bottom: 1px solid var(--line);
+        }
+
+        /* =========================================================
+   CARD HERO
+   ========================================================= */
+
+        [data-theme="dark"] .card-face {
+            background: #000000;
+            border-color: var(--line);
+        }
+
+        [data-theme="dark"] .card-front img {
+            filter: grayscale(100%);
+        }
+
+        [data-theme="dark"] .card-back {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        /* =========================================================
+   SECTIONS
+   ========================================================= */
+
+        [data-theme="dark"] .section {
+            background: #000000;
+            border-bottom: 1px solid var(--line);
+        }
+
+        [data-theme="dark"] .section-title {
+            color: #ffffff;
+        }
+
+        [data-theme="dark"] .section-text::before {
+            background: #ffffff;
+        }
+
+        /* =========================================================
+   VISION / MISION TEXT
+   ========================================================= */
+
+        [data-theme="dark"] .vision-text::before,
+        [data-theme="dark"] .vision-text::after {
+            background: #ffffff;
+        }
+
+        [data-theme="dark"] .vision-caption {
+            background: rgba(0, 0, 0, .75);
+        }
+
+        /* =========================================================
+   IMÁGENES EDITORIALES
+   ========================================================= */
+
+        [data-theme="dark"] .vision-box,
+        [data-theme="dark"] .editorial-visual,
+        [data-theme="dark"] .map-box,
+        [data-theme="dark"] .project-card {
+            border-color: var(--line);
+        }
+
+        /* =========================================================
+   SOCIAL GRID
+   ========================================================= */
+
+        [data-theme="dark"] .social-card {
+            color: #ffffff;
+            border-color: var(--line);
+        }
+
+        [data-theme="dark"] .social-card::after {
+            background: #ffffff;
+        }
+
+        [data-theme="dark"] .social-card:hover {
+            color: #000000;
+        }
+
+        /* =========================================================
+   FLOATING BUTTONS (WA / IG)
+   ========================================================= */
+
+        [data-theme="dark"] .float-btn {
+            background: #000000;
+            color: #ffffff;
+            border-color: var(--line);
+        }
+
+        [data-theme="dark"] .float-btn:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        /* =========================================================
+   MAP
+   ========================================================= */
+
+        [data-theme="dark"] iframe {
+            filter: grayscale(100%) invert(1) contrast(1.1);
+        }
+
+        /* =========================================================
+   FOOTER
+   ========================================================= */
+
+        [data-theme="dark"] footer {
+            background: #000000;
+            border-top: 1px solid var(--line);
+            color: #ffffff;
+        }
+
+        [data-theme="dark"] footer a {
+            color: #ffffff;
+        }
+
+        [data-theme="dark"] footer a:hover {
+            opacity: .7;
+        }
+
+        /* =========================================================
+   SWITCH (THEME / LANG)
+   ========================================================= */
+
+        [data-theme="dark"] .slider {
+            background: #444;
+        }
+
+        [data-theme="dark"] .slider::before {
+            background: #ffffff;
+        }
+
+        /* =========================================================
+   SEGURIDAD — EVITA CAMBIOS NO DESEADOS
+   ========================================================= */
+
+        [data-theme="dark"] a:hover {
+            color: inherit;
+        }
+
+        [data-theme="dark"] button,
+        [data-theme="dark"] input,
+        [data-theme="dark"] textarea {
+            background: transparent;
+            color: #ffffff;
+            border-color: var(--line);
+        }
+
+
+        /* =========================================================
+   LIGHT MODE (EXPLÍCITO)
+========================================================= */
+        [data-theme="light"] footer {
+            background: #fff;
+            color: #000;
+            border-top: 1px solid #000;
+        }
+
+        [data-theme="light"] footer .social a {
+            color: #000;
+        }
+
+        [data-theme="light"] footer .social a::after {
+            background: #000;
+        }
+
+        /* =========================
+   FOOTER SOCIAL – EDITORIAL
+========================= */
+
+        .footer-social {
+            display: flex;
+            gap: 26px;
+            flex-wrap: wrap;
+        }
+
+        .footer-social a {
+            position: relative;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--text);
+            padding-bottom: 6px;
+            transition: opacity .4s ease;
+        }
+
+        /* Línea editorial */
+        .footer-social a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 1px;
+            background: var(--text);
+            transition: width .5s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        .footer-social a:hover {
+            opacity: .75;
+        }
+
+        .footer-social a:hover::after {
+            width: 100%;
+        }
+
+        /* =========================
+   DARK THEME AJUSTES
+========================= */
+
+        [data-theme="dark"] .footer-social a {
+            color: #ffffff;
+        }
+
+        [data-theme="dark"] .footer-social a::after {
+            background: #ffffff;
+        }
+
+        /* =========================
+   RESPONSIVE
+========================= */
+
+        @media (max-width: 576px) {
+            .footer-social {
+                justify-content: center;
+                gap: 22px;
+            }
+
+            .footer-social a {
+                font-size: 11px;
+                letter-spacing: 2px;
+            }
+        }
+
+        /* =========================
+   FOOTER CONTACT – EDITORIAL
+========================= */
+
+        .footer-contact {
+            font-size: 12px;
+            letter-spacing: 2px;
+            line-height: 1.9;
+            color: var(--text);
+        }
+
+        .footer-contact div {
+            margin-bottom: 6px;
+        }
+
+        /* Links */
+        .footer-contact a {
+            position: relative;
+            text-decoration: none;
+            color: var(--text);
+            padding-bottom: 4px;
+            transition: opacity .4s ease;
+        }
+
+        /* Línea editorial */
+        .footer-contact a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 1px;
+            background: var(--text);
+            transition: width .5s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        .footer-contact a:hover {
+            opacity: .75;
+        }
+
+        .footer-contact a:hover::after {
+            width: 100%;
+        }
+
+        /* =========================
+   DARK THEME
+========================= */
+
+        [data-theme="dark"] .footer-contact,
+        [data-theme="dark"] .footer-contact a {
+            color: #ffffff;
+        }
+
+        [data-theme="dark"] .footer-contact a::after {
+            background: #ffffff;
+        }
+
+        /* =========================
+   RESPONSIVE
+========================= */
+
+        @media (max-width: 992px) {
+            .footer-contact {
+                text-align: center !important;
+                margin-top: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .footer-contact {
+                font-size: 11px;
+                letter-spacing: 1.5px;
+            }
+        }
+    </style>
+</head>
+<script>
+    document.querySelectorAll('.slide-right').forEach(el => {
+        observer.observe(el);
+    });
+
+</script>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg py-4">
+        <div class="container-fluid px-5">
+            <span data-no-translate=""><a class="navbar-brand" href="#">MARCA BLANCA</a></span>
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav"><span
+                    class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse justify-content-center" id="nav">
+                <ul class="navbar-nav gap-5">
+                    <li class="nav-item"><a class="nav-link" href="#vision">VISIÓN</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#mision">MISIÓN</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#propuesta">PROPUESTA</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#ubicacion">UBICACIÓN</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#redes">REDES</a></li>
+                    <li class="nav-item d-flex align-items-center ms-lg-3">
+                        <label class="switch">
+                            <input type="checkbox" id="langSwitch" onchange="toggleLanguage(this)">
+                            <span class="slider"></span>
+                        </label>
+                        <span class="switch-icon" id="langIcon">🇪🇸</span>
+                    </li>
+
+                    <li class="nav-item d-flex align-items-center ms-lg-3">
+                        <label class="switch">
+                            <input type="checkbox" id="themeSwitch" onchange="toggleTheme(this)">
+                            <span class="slider"></span>
+                        </label>
+                        <span class="switch-icon" id="themeIcon">☀</span>
+                    </li>
+
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container-fluid px-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-title" data-no-translate="">MARCA<br>BLANCA</div>
+                    <div class="hero-sub">CONCEPTO - NEGOCIO - LLAVE EN MANO</div>
+                </div>
+                <div class="col-lg-6 d-flex justify-content-end position-relative">
+                    <div class="card-wrapper">
+                        <div class="card-flip">
+                            <div class="card-inner">
+
+                                <div class="card-face card-front">
+                                    <p>LLAVE EN MANO</p>
+                                    <img src="assets/img/marca_tarjeta.jpeg" alt="Marca Blanca">
+
+                                    <h4><b>Diseño que se convierte en negocio.</b></h4>
+
+                                </div>
+
+                                <div class="card-face card-back">
+                                    <h1 data-no-translate=""><b>MARCA BLANCA</b></h1>
+                                    <p>
+                                        crea y ejecuta negocios comerciales
+                                        llave en mano, especializados en espacios gastronómicos y comerciales de alto
+                                        impacto. Desarrollamos conceptos listos para operar, combinando diseño
+                                        estratégico,
+                                        eficiencia operativa y viabilidad comercial, reduciendo riesgos y tiempos para
+                                        nuestros clientes.</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vertical-label position-absolute end-0" data-no-translate="">MARCA BLANCA</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="vision">
+        <div class="container px-5">
+            <div class="row align-items-center">
+
+                <!-- TEXTO VISIÓN -->
+                <div class="col-lg-6" id="vision">
+                    <div class="vertical-label start-0">VISIÓN</div>
+
+                    <h2 class="section-title">Visión</h2>
+
+                    <p class="section-text vision-text">
+                        Ser una referencia en la creación de negocios marca blanca, reconocidos por su diseño,
+                        funcionalidad y enfoque comercial.
+                    </p>
+                </div>
+
+                <!-- BLOQUE VISUAL -->
+                <div class="col-lg-6">
+                    <div class="vision-box">
+                        <img src="assets/img/vision.png" alt="Visión Marca Blanca">
+
+                        <div class="vision-caption">
+                            <span data-no-translate="">MARCA BLANCA</span>
+                            <strong>Visión</strong>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section" id="mision">
+        <div class="container px-5">
+            <div class="row align-items-center">
+
+                <!-- IMAGEN -->
+                <div class="col-lg-6">
+                    <div class="vision-box">
+                        <img src="assets/img/mision.jpg" alt="Misión Marca Blanca">
+
+                        <div class="vision-caption">
+                            <span data-no-translate="">MARCA BLANCA</span>
+                            <strong>Misión</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TEXTO -->
+                <div class="col-lg-6" id="mision">
+                    <div class="vertical-label end-0">MISIÓN</div>
+
+                    <h2 class="section-title">Misión</h2>
+
+                    <p class="section-text vision-text">
+                        Diseñar y desarrollar negocios comerciales llave en mano, entregando espacios funcionales y
+                        listos para operar, que permitan a emprendedores e inversionistas iniciar sus proyectos de forma
+                        rápida y segura.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- =========================
+ PROPUESTA DE VALOR
+========================= -->
+    <section class="section" id="propuesta">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <!-- TEXTO -->
+                <div class="col-lg-6 slide-left">
+                    <small class="vertical-label">PROPUESTA</small>
+
+                    <h2 class="section-title">Propuesta de Valor</h2>
+
+                    <div class="section-text writing">
+                        <p>Convertimos espacios en negocios listos para operar, reduciendo tiempos, costos y riesgos de
+                            emprendimiento.</p>
+                    </div>
+                </div>
+
+                <!-- VISUAL -->
+                <div class="col-lg-6 slide-right mt-5 mt-lg-0">
+                    <div class="editorial-visual">
+                        <img src="assets/img/propuesta.jpg" alt="">
+                        <div class="editorial-overlay">
+                            <small>MARCA BLANCA</small>
+                            <h3>Diseño con intención</h3>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================
+ UBICACIÓN
+========================= -->
+    <section class="section" id="ubicacion">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <!-- MAPA -->
+                <div class="col-lg-6 slide-left">
+                    <div class="map-box">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3977.868586317518!2d-75.2206544250223!3d4.435561895538657!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNMKwMjYnMDguMCJOIDc1wrAxMycwNS4xIlc!5e0!3m2!1ses!2sco!4v1765754294402!5m2!1ses!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+
+                <!-- TEXTO -->
+                <div class="col-lg-6 slide-right mt-5 mt-lg-0">
+                    <small class="vertical-label">UBICACIÓN</small>
+
+                    <h2 class="section-title">Dónde estamos</h2>
+
+                    <div class="section-text vision-text">
+                        <p>IBAGUÉ - TOLIMA</p>
+                        <p>Carrera 4 bis # 35-60 Barrio cadiz
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================
+ REDES SOCIALES
+========================= -->
+    <section class="section" id="redes">
+        <div class="container text-center">
+            <h2 class="section-title">Conecta con nosotros</h2>
+
+            <div class="social-grid mt-5">
+                <a href="https://instagram.com/marca_blanca1" class="social-card">
+                    <span>Instagram</span>
+                </a>
+                <a href="https://wa.me/573242371769" class="social-card">
+                    <span>WhatsApp</span>
+                </a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=marcablanca31@gmail.com" class="social-card">
+                    <span>Email</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================
+ BOTONES FLOTANTES
+========================= -->
+    <!-- FLOATING SOCIAL BUTTONS -->
+    <div class="floating-socials">
+
+        <!-- WHATSAPP -->
+        <a href="https://wa.me/573242371769" target="_blank" class="float-btn whatsapp"
+            aria-label="Escríbenos por WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+            <span>WHATSAPP</span>
+        </a>
+
+        <!-- INSTAGRAM -->
+        <a href="https://instagram.com/marca_blanca1" target="_blank" class="float-btn instagram"
+            aria-label="Síguenos en Instagram">
+            <i class="fab fa-instagram"></i>
+            <span>INSTAGRAM</span>
+        </a>
+
+    </div>
+
+
+
+    <section class="section gallery">
+        <div class="container px-5">
+            <div class="vertical-label position-absolute start-0">PROYECTOS</div>
+
+            <div class="row g-4">
+
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <img src="assets/img/1.jpeg" alt="">
+                        <div class="project-info">
+                            <h5>RESTAURANTE</h5>
+                            <span>ORANGE BOX</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <img src="assets/img/2.jpeg" alt="">
+                        <div class="project-info">
+                            <h5>RESTAURANTE</h5>
+                            <span>ORANGE BOX</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <img src="assets/img/3.jpeg" alt="">
+                        <div class="project-info">
+                            <h5>RESTAURANTE</h5>
+                            <span>ORANGE BOX</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <footer class="footer border-top">
+        <div class="container px-5">
+
+            <!-- FOOTER TOP -->
+            <div
+                class="footer-top d-flex flex-column flex-lg-row justify-content-between align-items-start align-items-lg-center">
+
+                <!-- BRAND -->
+                <div class="footer-brand mb-4 mb-lg-0" data-no-translate>
+                    <strong data-no-translate="">MARCA BLANCA</strong><br>
+                    <span class="footer-tagline">Estudio creativo & estrategia digital</span>
+                </div>
+
+                <!-- CONTACT -->
+                <div class="footer-contact text-lg-end">
+                    <div>Colombia</div>
+                    <div>
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=marcablanca31@gmail.com"
+                            data-no-translate="">marcablanca31@gmail.com</a>
+                    </div>
+                    <div>
+                        <a href="tel:+573242371769">+57 324 2371769</a>
+                        <a href="tel:+57320 4787444">+57 320 4787444</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- DIVIDER -->
+            <div class="footer-divider my-4"></div>
+
+            <!-- FOOTER BOTTOM -->
+            <div class="footer-bottom d-flex flex-column flex-lg-row justify-content-between align-items-center">
+
+                <!-- COPYRIGHT -->
+                <div class="footer-copy" data-no-translate>
+                    © <span id="year"></span> Marca Blanca. Todos los derechos reservados.
+                </div>
+
+                <!-- SOCIAL -->
+                <div class="footer-social mt-3 mt-lg-0">
+                    <a href="https://instagram.com/marca_blanca1" aria-label="Instagram">Instagram</a>
+                    <a href="https://wa.me/573242371769" aria-label="Behance">WhatsApp</a>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=marcablanca31@gmail.com"
+                        aria-label="LinkedIn">Correo Electronico</a>
+                </div>
+
+            </div>
+
+        </div>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        /* =========================================================
+           ESTADO GLOBAL
+        ========================================================= */
+        let ORIGINAL_TEXT = new Map();
+        let CURRENT_LANG = "es";
+
+        /* =========================================================
+           CAPTURAR TEXTO ORIGINAL (1 SOLA VEZ)
+        ========================================================= */
+        document.addEventListener("DOMContentLoaded", () => {
+
+            document.querySelectorAll("body *").forEach(el => {
+
+                // 🚫 NO traducir si está marcado
+                if (el.closest("[data-no-translate]")) return;
+
+                if (
+                    el.childNodes.length === 1 &&
+                    el.childNodes[0].nodeType === Node.TEXT_NODE
+                ) {
+                    const text = el.textContent.trim();
+                    if (text.length > 0) {
+                        ORIGINAL_TEXT.set(el, text);
+                    }
+                }
+            });
+
+            /* RESTAURAR ESTADO */
+            const savedLang = localStorage.getItem("lang");
+            const savedTheme = localStorage.getItem("theme");
+
+            if (savedLang === "en") {
+                const langSwitch = document.getElementById("langSwitch");
+                if (langSwitch) langSwitch.checked = true;
+                translateToEnglish();
+            }
+
+            if (savedTheme === "dark") {
+                const themeSwitch = document.getElementById("themeSwitch");
+                if (themeSwitch) themeSwitch.checked = true;
+                applyTheme("dark");
+            }
+        });
+
+        /* =========================================================
+           TRADUCCIÓN LIMPIA (NO ROMPE NADA)
+        ========================================================= */
+        async function translateToEnglish() {
+
+            if (CURRENT_LANG === "en") return;
+            CURRENT_LANG = "en";
+
+            const elements = Array.from(ORIGINAL_TEXT.keys());
+            const texts = elements.map(el => ORIGINAL_TEXT.get(el));
+
+            const query = encodeURIComponent(texts.join("|||"));
+
+            try {
+                const res = await fetch(
+                    `https://translate.googleapis.com/translate_a/single?client=gtx&sl=es&tl=en&dt=t&q=${query}`
+                );
+                const data = await res.json();
+                const translated = data[0].map(t => t[0]).join("").split("|||");
+
+                elements.forEach((el, i) => {
+                    if (translated[i]) el.textContent = translated[i];
+                });
+
+                localStorage.setItem("lang", "en");
+
+            } catch (e) {
+                console.error("Error traducción", e);
+            }
+        }
+
+        /* =========================================================
+           RESTAURAR ESPAÑOL
+        ========================================================= */
+        function restoreSpanish() {
+            CURRENT_LANG = "es";
+
+            ORIGINAL_TEXT.forEach((text, el) => {
+                el.textContent = text;
+            });
+
+            localStorage.setItem("lang", "es");
+        }
+
+        /* =========================================================
+           TOGGLE IDIOMA
+        ========================================================= */
+        function toggleLanguage(el) {
+            el.checked ? translateToEnglish() : restoreSpanish();
+        }
+
+        /* =========================================================
+           TEMA CLARO / OSCURO
+        ========================================================= */
+        function applyTheme(theme) {
+            document.documentElement.setAttribute("data-theme", theme);
+            localStorage.setItem("theme", theme);
+        }
+
+        function toggleTheme(el) {
+            el.checked ? applyTheme("dark") : applyTheme("light");
+        }
+    </script>
+
+
+</body>
+
+</html>
